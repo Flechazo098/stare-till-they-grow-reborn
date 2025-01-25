@@ -1,18 +1,18 @@
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
 version = "${minecraft_version}-${mod_version}"
-group = 'dev.tmp.staretilltheygrow' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'staretilltheygrow'
+group = 'com.flechazo.staretilltheygrowreborn' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'staretilltheygrowreboen'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: 'official', version: '1.19.4'
+    mappings channel: 'official', version: '1.20.1'
 
     runs {
         client {
@@ -71,18 +71,18 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.4-45.0.9'
+    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
 }
 
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "staretilltheygrow",
+                "Specification-Title"     : "staretilltheygrowre",
                 "Specification-Vendor"    : "ianwijma",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "ianwijma",
+                "Implementation-Vendor"   : "Flechazo",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
