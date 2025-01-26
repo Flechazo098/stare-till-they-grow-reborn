@@ -19,3 +19,6 @@
 - Fixed potential memory leaks in network handling
 - Improved error handling and logging
 - Fixed configuration loading issues
+
+### Contributors
+- Flechazo（Main developer）
