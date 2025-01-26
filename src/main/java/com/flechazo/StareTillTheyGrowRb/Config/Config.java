@@ -103,8 +103,8 @@ public class Config {
                     .define("general.enableRegrowWool", true);
             builder.pop();
             enableTraderRestock = builder
-                    .comment("Enable Trader Restock feature")
-                    .define("enableTraderRestock", true);
+                    .comment("Enable Trader Restock feature (Experimental content, currently unstable)")
+                    .define("enableTraderRestock", false);
 
             builder.comment("Timing Settings").push("timing");
             ticksDelay = builder

@@ -8,6 +8,7 @@ import com.flechazo.StareTillTheyGrowRb.Actions.Entity.RegrowWoolAction;
 import com.flechazo.StareTillTheyGrowRb.Actions.Entity.TraderRestockAction;
 import com.flechazo.StareTillTheyGrowRb.Dictionaries.PlayerTargetDictionary;
 import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -51,8 +52,10 @@ public final class ServerTickEventHandler {
                         new RegrowWoolAction(playerEntityTarget).invoke();
 
                         // 获取 Villager 实例
-                        Optional <AbstractVillager> optionalTrader = playerEntityTarget.getEntity();
-                        optionalTrader.ifPresent(trader -> new TraderRestockAction(playerEntityTarget, trader).invoke());
+                        Optional<AbstractVillager> optionalTrader = playerEntityTarget.getEntity();
+                        optionalTrader.ifPresent(trader -> 
+                            new TraderRestockAction((PlayerTargetDictionary.PlayerEntityTarget) playerTarget, trader, player).invoke()
+                        );
                     }
                 }
             });

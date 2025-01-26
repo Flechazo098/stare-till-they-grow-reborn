@@ -4,8 +4,10 @@ import com.flechazo.StareTillTheyGrowRb.Config.Config;
 import com.flechazo.StareTillTheyGrowRb.Dictionaries.PlayerTargetDictionary;
 import com.flechazo.StareTillTheyGrowRb.EventHandlers.TraderOpenHandler;
 import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * 用于处理商人的补货逻辑和冷却时间
  *
  * @author Flechazo
- * @since 3.0.0
+ * @since 1.20.1
+ * @version 3.0.0
  */
 public class TraderRestockAction extends AbstractEntityAction {
     private static final Logger logger = LoggerFactory.getLogger(TraderRestockAction.class);
@@ -32,9 +35,10 @@ public class TraderRestockAction extends AbstractEntityAction {
      * @param playerEntityTarget 玩家的目标实体信息
      * @param trader 要补货的商人
      */
-    public TraderRestockAction(PlayerTargetDictionary.PlayerEntityTarget playerEntityTarget, AbstractVillager trader) {
+    public TraderRestockAction(PlayerTargetDictionary.PlayerEntityTarget playerEntityTarget, @NotNull AbstractVillager trader, Player player) {
         super(playerEntityTarget);
         this.trader = trader;
+        this.player = player;
     }
 
     @Override
@@ -46,13 +50,6 @@ public class TraderRestockAction extends AbstractEntityAction {
 
         UUID traderId = trader.getUUID();
 
-        // 检查是否有交易被买断
-        boolean anyTradeOutOfStock = checkAnyTradeOutOfStock(trader);
-        if (!anyTradeOutOfStock) {
-            logger.debug("Trader {} has no out-of-stock trades, not restocking", traderId);
-            return;
-        }
-
         // 检查冷却时间
         if (!canTraderRestock(trader)) {
             logger.debug("Trader {} is in cooldown, cannot restock", traderId);
@@ -63,6 +60,8 @@ public class TraderRestockAction extends AbstractEntityAction {
             // 执行补货
             MerchantOffers offers = trader.getOffers();
             boolean restocked = false;
+
+            // 遍历所有交易，只补充已买断的
             for (MerchantOffer offer : offers) {
                 if (offer.isOutOfStock()) {
                     offer.resetUses();
@@ -70,6 +69,7 @@ public class TraderRestockAction extends AbstractEntityAction {
                 }
             }
 
+            // 只有在实际进行了补货操作后才更新时间和状态
             if (restocked) {
                 // 更新补货时间
                 updateLastRestockTime(trader);
@@ -81,30 +81,12 @@ public class TraderRestockAction extends AbstractEntityAction {
                 emitParticles(trader.position());
 
                 logger.info("Successfully restocked out-of-stock trades for trader {}", traderId);
+            } else {
+                logger.debug("No out-of-stock trades found for trader {}", traderId);
             }
         } catch (Exception e) {
             logger.error("Error while restocking trader {}: {}", traderId, e.getMessage());
         }
-    }
-
-    /**
-     * 检查商人的交易中是否有至少一个商品已被买断
-     *
-     * @param trader 要检查的商人
-     * @return 如果有一个或多个商品的交易已买断返回 true，否则返回 false
-     */
-    private boolean checkAnyTradeOutOfStock(AbstractVillager trader) {
-        MerchantOffers offers = trader.getOffers();
-        if (offers.isEmpty()) {
-            return false;
-        }
-
-        for (MerchantOffer offer : offers) {
-            if (offer.isOutOfStock()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -129,7 +111,7 @@ public class TraderRestockAction extends AbstractEntityAction {
         boolean canRestock = (currentTime - lastRestockTime) >= COOLDOWN_TIME;
 
         logger.debug("Trader {} cooldown check: lastRestock={}, current={}, canRestock={}, cooldownTime={}",
-            traderId, lastRestockTime, currentTime, canRestock, COOLDOWN_TIME);
+                traderId, lastRestockTime, currentTime, canRestock, COOLDOWN_TIME);
 
         return canRestock;
     }
