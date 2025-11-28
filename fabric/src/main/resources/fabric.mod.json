@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "staretilltheygrow",
+  "version": "${version}",
+  "name": "Stare Till They Grow",
+  "description": "A seamless laundry experience that is definitely not an item transport mod.",
+  "authors": [
+    "Flechazo"
+  ],
+  "contact": {
+    "homepage": ""
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/staretilltheygrow/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.sighs.staretilltheygrow.fabric.StareTillTheyGrowFabric"
+    ],
+    "client": [
+      "com.sighs.staretilltheygrow.fabric.client.StareTillTheyGrowFabricClient"
+    ]
+  },
+  "mixins": [
+    "staretilltheygrow.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
