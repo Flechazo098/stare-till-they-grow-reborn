@@ -6,12 +6,12 @@ license = "All Rights Reserved"
 [[mods]]
 modId = "staretilltheygrow"
 version = "${version}"
-displayName = "Stare Till They Grow"
-authors = "Flechazo"
+displayName = "Stare Till They Grow!"
+authors = "Ian Wijma, Flechazo"
 description = '''
-A seamless laundry experience that is definitely not an item transport mod.
+Don't be like Bob, just stare till they grow!!
 '''
-#logoFile = ""
+logoFile="logo.png"
 
 [[dependencies.staretilltheygrow]]
 modId = "forge"

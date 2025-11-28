@@ -2,16 +2,17 @@
   "schemaVersion": 1,
   "id": "staretilltheygrow",
   "version": "${version}",
-  "name": "Stare Till They Grow",
-  "description": "A seamless laundry experience that is definitely not an item transport mod.",
+  "name": "Stare Till They Grow!",
+  "description": "Don't be like Bob, just stare till they grow!!",
   "authors": [
-    "Flechazo"
+    "Flechazo",
+    "Ian Wijma"
   ],
   "contact": {
     "homepage": ""
   },
   "license": "All-Rights-Reserved",
-  "icon": "assets/staretilltheygrow/icon.png",
+  "icon": "logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -25,7 +26,7 @@
     "staretilltheygrow.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.18.1",
+    "fabricloader": "*",
     "minecraft": "~1.20.1",
     "java": ">=17",
     "fabric-api": "*"
