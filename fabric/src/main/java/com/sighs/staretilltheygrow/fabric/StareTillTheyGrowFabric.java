@@ -6,6 +6,7 @@ import com.sighs.staretilltheygrow.actions.entity.FallInLoveAction;
 import com.sighs.staretilltheygrow.actions.entity.GrowUpAction;
 import com.sighs.staretilltheygrow.actions.entity.RegrowWoolAction;
 import com.sighs.staretilltheygrow.actions.entity.TraderRestockAction;
+import com.sighs.staretilltheygrow.config.Config;
 import com.sighs.staretilltheygrow.dictionaries.PlayerTargetDictionary;
 import com.sighs.staretilltheygrow.eventhooks.TraderOpenHooks;
 import com.sighs.staretilltheygrow.fabric.network.NetworkFabric;
@@ -22,6 +23,7 @@ public class StareTillTheyGrowFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        Config.init(ConfigFabricService.INSTANCE);
         ConfigFabricService.register();
         NetworkFabric.initialize();
         ServerTickEvents.END_SERVER_TICK.register(server -> {

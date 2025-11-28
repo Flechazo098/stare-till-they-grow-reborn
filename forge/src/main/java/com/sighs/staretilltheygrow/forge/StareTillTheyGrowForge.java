@@ -1,5 +1,6 @@
 package com.sighs.staretilltheygrow.forge;
 
+import com.sighs.staretilltheygrow.config.Config;
 import com.sighs.staretilltheygrow.forge.config.ConfigForgeService;
 import com.sighs.staretilltheygrow.forge.network.NetworkForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -12,7 +13,7 @@ public class StareTillTheyGrowForge {
     public static final String MOD_ID = "staretilltheygrow";
 
     public StareTillTheyGrowForge() {
-        ConfigForgeService.setup();
+        Config.init(ConfigForgeService.INSTANCE);
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         modBus.addListener(this::commonSetup);
     }

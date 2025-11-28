@@ -14,6 +14,8 @@ import java.util.List;
 @Config(name = StareTillTheyGrowFabric.MOD_ID)
 public final class ConfigFabricService implements ConfigService, ConfigData {
 
+    @ConfigEntry.Gui.Excluded
+    public static final ConfigFabricService INSTANCE = new ConfigFabricService();
     @ConfigEntry.Gui.Tooltip
     public boolean enableApplyBoneMeal = true;
 

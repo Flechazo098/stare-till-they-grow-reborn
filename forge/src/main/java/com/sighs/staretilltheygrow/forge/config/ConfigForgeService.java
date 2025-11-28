@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.List;
 
 public final class ConfigForgeService implements ConfigService {
+    public static final ConfigForgeService INSTANCE = new ConfigForgeService();
     private final Forge forge;
 
     public ConfigForgeService() {
@@ -17,8 +18,6 @@ public final class ConfigForgeService implements ConfigService {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, pair.getRight());
         this.forge = pair.getLeft();
     }
-
-    public static void setup() { new ConfigForgeService(); }
 
     public boolean enableApplyBoneMeal() { return forge.enableApplyBoneMeal.get(); }
     public boolean enableFallInLove() { return forge.enableFallInLove.get(); }
